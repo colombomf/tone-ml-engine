@@ -1,4 +1,4 @@
-# tone-ml-engine
+# Tone ML Engine
 
 A tone classifier. Three classes: **dark**, **hopeful**, **cynical**.
 
@@ -173,4 +173,4 @@ Layer 1 (embedding lookup) resolves corpus entries reliably. It's a direct match
 This is intentional. The point of this project is the engineering path -> weight export format, pure-JS inference, three-layer fallback, build pipeline, not accuracy maximization. If you extend the corpus, accuracy scales. The architecture doesn't change.
 
 The same architecture supports higher accuracy when the project warrants it. Replacing TF-IDF with a fine-tuned sentence transformer (RoBERTa or a domain-adapted variant) closes most of the gap on irony and figurative language, contextual embeddings understand what a sentence is doing, not just what words it contains. Expanding the training set through active learning, prioritising low-confidence predictions for human review, compounds those gains without requiring a full relabel pass. Quantized transformer models run on Workers AI natively, so the edge deployment pattern holds without adding a Python server to the stack.
-# tone-ml-engine
+
