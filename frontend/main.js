@@ -287,7 +287,7 @@ async function init() {
     showNext();
   } else {
     verseEl.textContent = 'No verse pool loaded. Enter any text below to classify.';
-    sourceEl.textContent = 'Set TONE_URL in index.html to load verses from your Worker.';
+    sourceEl.textContent = 'Run the Worker locally with wrangler dev, or deploy it and set TONE_URL in index.html.';
     badgeEl.innerHTML = '';
     layerEl.textContent = '';
   }
