@@ -280,6 +280,16 @@ export default {
         return jsonResponse(401, { error: "Unauthorized" }, corsOrigin);
       }
 
+      const frontendOrigin = normalizeOrigin(env?.FRONTEND_URL || "");
+      if (frontendOrigin) {
+        const referer = normalizeOrigin(request.headers.get("Referer") || "");
+        const isLocalhost = referer.startsWith("http://localhost") || referer.startsWith("http://127.0.0.1");
+        const matchesFrontend = referer.startsWith(frontendOrigin);
+        if (!isLocalhost && !matchesFrontend) {
+          return jsonResponse(403, { error: "Forbidden" }, corsOrigin);
+        }
+      }
+
       const ip = getClientIp(request);
       if (isRateLimited(ip)) {
         return jsonResponse(429, { error: "Rate limit exceeded" }, corsOrigin);
