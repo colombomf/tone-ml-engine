@@ -1,0 +1,21 @@
+# Python
+ml/.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+worker/node_modules/
+
+# Build output
+frontend/dist/
+
+# Cloudflare local dev secrets
+worker/.dev.vars
+
+# Generated binary artifacts (retrain to reproduce)
+ml/artifacts/*.joblib
+
+# OS
+.DS_Store
+Thumbs.db

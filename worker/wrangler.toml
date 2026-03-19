@@ -1,0 +1,10 @@
+name = "tone-ml-engine"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+ALLOW_LOCALHOST = "true"
+
+# Secrets — set via wrangler secret put, not here:
+#   TONE_TOKEN   — shared secret between frontend and worker
+#   FRONTEND_URL — your Cloudflare Pages URL (overrides CORS allowlist)

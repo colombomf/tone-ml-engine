@@ -1,0 +1,12 @@
+{
+  "name": "tone-ml-engine-worker",
+  "version": "1.0.0",
+  "description": "Tone ML Engine — Cloudflare Worker (TF-IDF + LogReg inference at edge)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
