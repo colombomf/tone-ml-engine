@@ -8,6 +8,21 @@ Ships with a public domain poetry corpus (~161 labeled lines). Swap in any label
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart TD
+    A[Input Text] --> B{In EMBEDDED_LABELS?}
+    B -- Yes --> C[Return Label\nclient-side lookup]
+    B -- No --> D[Cloudflare Worker\nTF-IDF + Logistic Regression]
+    D --> E{Confidence â‰¥ 0.38?}
+    E -- Yes --> F[Return ML Prediction]
+    E -- No --> G[Rule-based Word Lists]
+    G --> H[Return Label]
+```
+
+---
+
 ## What it does
 
 Classifies short text through three layers, in priority order:
@@ -171,6 +186,14 @@ Something must always return a label. The rule layer is the correctness floor â€
 Layer 1 (embedding lookup) resolves corpus entries reliably. It's a direct match against training data. Layer 2 (TF-IDF + LogReg) handles novel text at ~54% accuracy on the held-out test set. That's adequate for demonstration and limited by two things: dataset size, and the inherent difficulty of encoding irony and figurative language in bag-of-words features.
 
 This is intentional. The point of this project is the engineering path -> weight export format, pure-JS inference, three-layer fallback, build pipeline, not accuracy maximization. If you extend the corpus, accuracy scales. The architecture doesn't change.
+
+---
+
+## Origin
+
+`tone-ml-engine` was extracted from **Night City Voices**, a Cyberpunk 2077 quote generator built as a portfolio project. The original system classified dialogue tone in real time using the same hybrid architecture. This repository isolates the tone classification engine so it can be reused with any labeled text dataset.
+
+---
 
 The same architecture supports higher accuracy when the project warrants it. Replacing TF-IDF with a fine-tuned sentence transformer (RoBERTa or a domain-adapted variant) closes most of the gap on irony and figurative language, contextual embeddings understand what a sentence is doing, not just what words it contains. Expanding the training set through active learning, prioritising low-confidence predictions for human review, compounds those gains without requiring a full relabel pass. Quantized transformer models run on Workers AI natively, so the edge deployment pattern holds without adding a Python server to the stack.
 
